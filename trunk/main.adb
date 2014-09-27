@@ -1,4 +1,5 @@
+with ada.Text_IO;
 procedure main is 
 begin
-null;
+ada.Text_IO.Put_Line("Hello");
 end;
