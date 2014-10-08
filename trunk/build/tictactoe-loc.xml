@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file>C:\Users\dodo\Desktop\tmp\mini-projet-tictactoe\tictactoe.gpr</vfs_file>
+    <file_marker current="true" column=" 1" line=" 1" >
+      <vfs_file>C:\Users\dodo\Desktop\tmp\mini-projet-tictactoe\src\tictactoe-ia.adb</vfs_file>
+    </file_marker>
+  </Project>
+  <Project >
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\src\main.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 21" line=" 23">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-plateau.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 108" line=" 3">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-plateau.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 69" line=" 6">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-ia.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 4" line=" 5">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-ia.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 13">
+      <vfs_file >C:\Users\dodo\Projet\aleatoire.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 10" line=" 126">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-ia.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\launch.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 10" line=" 126">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-ia.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-plateau.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-cellule.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Projet\tictactoe-plateau.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 40" line=" 66">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\src\tictactoe-ia.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\src\main.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\src\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\src\tictactoe-component.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\src\tictactoe-component.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 4" line=" 10">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\src\main.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 29" line=" 2">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\src\partie.ads</vfs_file>
+    </file_marker>
+  </Project>
+  <Project >
+    <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.gpr</vfs_file>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 28" line=" 7">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 28" line=" 7">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 14" line=" 4">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-component.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 30" line=" 14">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-component.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-ia.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-component.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-component.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-component.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-component.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-ia.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-ia.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\COURS 2014 - 2015\Ada\Tictactoe\tictactoe-component.ads</vfs_file>
+    </file_marker>
+  </Project>
+  <Project >
+    <file_marker current="true" column=" 1" line=" 1">
+      <vfs_file >C:\Users\dodo\Desktop\tmp\Tictactoe\tictactoe.ads</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>
