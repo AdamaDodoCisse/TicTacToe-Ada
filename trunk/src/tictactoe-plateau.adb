@@ -79,24 +79,6 @@ package body Tictactoe.Plateau is
       return false;
    end Gagnant;
 
-     -- La fonction Afficher permet d'afficher le contenu d'un plateau
-   procedure Afficher(P_Plateau : Plateau) is
-   begin
-      for L in Ligne'Range loop
-         for C in Colonne'Range loop
-            if EstLibre( P_Plateau, L,C) then
-               Put("[    ]");
-            else
-               Put("[ ");
-               Put(Pion'Image(Get_Pion(Cell => P_Plateau.Coordonnees(L,C))));
-               Put(" ]");
-            end if;
-         end loop;
-         new_line;
-      end loop;
-      New_Line;
-   end Afficher;
-
     -- La fonction [Get_Cellule] retourne un pointeur sur une cellule a une position donnée
    function Get_Cellule(P_Plateau : Plateau ; P_Ligne : Ligne ; P_Colonne: Colonne) return Pointeur_Cellule is
    begin
