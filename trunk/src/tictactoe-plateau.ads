@@ -14,8 +14,6 @@ package Tictactoe.Plateau is
    function EstPlein(P_Plateau : Plateau) return boolean;
    -- La fonction [Gagnant] test si le pion passer en parametre a gagné
    function Gagnant(P_Plateau : Plateau; P_Pion : Pion) return boolean;
-   -- La fonction Afficher permet d'afficher le contenu d'un plateau
-   procedure Afficher(P_Plateau : Plateau);
    -- La fonction [Get_Cellule] retourne un pointeur sur une cellule a une position donnée
    function Get_Cellule(P_Plateau : Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) return Pointeur_Cellule;
 
