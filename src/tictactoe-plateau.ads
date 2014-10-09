@@ -8,8 +8,6 @@ package Tictactoe.Plateau is
    procedure Liberer(P_Plateau : in out Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne);
     -- La fonction [NouveauPlateau] retourne un nouveau plateau avec toutes les cases à vides
    function NouveauPlateau return Plateau;
-   -- La fonction [EstLibre] test si un emplacement dans le plateau est libre ou pas
-   function EstLibre(P_Plateau : Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) return boolean;
    -- La fonction [EstPlein] test si le plateau ne contient aucune case vide
    function EstPlein(P_Plateau : Plateau) return boolean;
    -- La fonction [Gagnant] test si le pion passer en parametre a gagné

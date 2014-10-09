@@ -1,4 +1,6 @@
 with Ada.Text_IO; use Ada.Text_IO;
+with Tictactoe.Cellule;
+use Tictactoe.Cellule;
 Package body Player is
 
    Function Get_Name(J:Joueur) return Unbounded_String is
@@ -47,7 +49,7 @@ Package body Player is
       X:=Natural'Value(Get_Line);
       Put_Line("colonne");
       Y:=Get_Line(1);
-      if EstLibre(P,X,Y) then
+      if Tictactoe.Cellule.EstLibre(P.Get_Cellule(X,Y)) then
          Tracer(P,X,Y,P_Pion);
       else
          Reel(P,J,P_Pion);

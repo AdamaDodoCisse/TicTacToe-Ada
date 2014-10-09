@@ -33,11 +33,6 @@ package body Tictactoe.Plateau is
       end loop;
       return (Coordonnees => P , Etat => 0 );
    end NouveauPlateau;
-   -- La fonction [EstLibre] test si un emplacement dans le plateau est libre ou pas
-   function EstLibre(P_Plateau : Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) return boolean is
-   begin
-      return Cellule.EstLibre(P_Plateau.Coordonnees(P_Ligne, P_Colonne));
-   end EstLibre;
    -- La fonction [EstPlein] test si le plateau ne contient aucune case vide
    function EstPlein(P_Plateau : Plateau) return boolean is
    begin

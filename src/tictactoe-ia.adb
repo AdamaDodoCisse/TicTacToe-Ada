@@ -1,6 +1,7 @@
 with Tictactoe.Plateau;
 use Tictactoe.Plateau;
 with Aleatoire;
+with Tictactoe.Cellule; use Tictactoe.Cellule;
 package body Tictactoe.IA is
    -- La fonction min permet de simuler le pion adverse du pion passer en parametre et renvoie une evaluation de la case jouer
    -- Evaluation correspond à la valeur à retoourner lorsqu'on gagne
@@ -25,7 +26,7 @@ package body Tictactoe.IA is
       end if;
       For L in Ligne'Range loop
          For C in Colonne'Range Loop
-            if EstLibre(P_Plateau, L, C) then
+            if Tictactoe.Cellule.EstLibre(P_Plateau.Get_Cellule( L, C)) then
                Tracer(P_Plateau, L,C, P_Pion);
                eval := Min(P_Plateau , P_Pion, Evaluation,Profondeur );
                Liberer(P_Plateau,L,C);
@@ -87,7 +88,7 @@ package body Tictactoe.IA is
 
       For L in Ligne'Range loop
          For C in Colonne'Range Loop
-            if EstLibre(P_Plateau_aux, L, C) then
+            if Tictactoe.Cellule.EstLibre(P_Plateau_aux.Get_Cellule( L, C)) then
                Tracer(P_Plateau_aux, L,C, Suivant(P_Pion));
                eval := Max(P_Plateau_aux , P_Pion, -Evaluation, profondeur - 1);
                Liberer(P_Plateau_aux,L,C);
@@ -117,7 +118,7 @@ package body Tictactoe.IA is
 
       For L in Ligne'Range loop
          For C in Colonne'Range Loop
-            if EstLibre(P_Plateau_aux, L, C) then
+            if Tictactoe.Cellule.EstLibre(P_Plateau_aux.Get_Cellule( L, C)) then
                Tracer(P_Plateau_aux, L,C, P_Pion);
                eval := Min(P_Plateau_aux , P_Pion, -Evaluation, profondeur - 1);
                Liberer(P_Plateau_aux,L,C);

@@ -14,7 +14,7 @@ Package body Game is
       For i in ligne loop
          For j in Colonne loop
             Put("|");
-            if P_Plateau.EstLibre(i,j) then
+            if Tictactoe.Cellule.EstLibre(P_Plateau.Get_Cellule(i,j)) then
                Put("  ");
             else
                 Put(Pion'Image(Get_Pion(P_Plateau.Get_Cellule(i,j))));
