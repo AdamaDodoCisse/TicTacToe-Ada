@@ -1,0 +1,13 @@
+project Tictactoe is
+
+   for Source_Dirs use ("./**");
+   for Main use ("main.adb");
+   for Object_Dir use "build";
+   for Exec_Dir use "exec";
+
+   package Ide is
+      for Documentation_Dir use "doc";
+   end Ide;
+
+end Tictactoe;
+
