@@ -1,6 +1,6 @@
 package body Tictactoe.Plateau is
    -- La procedure [tracer] permet d'inserer un pion dans un plateau
-   procedure Tracer(P_Plateau : in out Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne ; P_Pion : Pion ) is
+   procedure Tracer(P_Plateau : Pointeur_Plateau; P_Ligne : Ligne ; P_Colonne : Colonne ; P_Pion : Pion ) is
    begin
       case P_Plateau.Coordonnees(P_Ligne,P_Colonne).Vide is
       when true =>
@@ -13,7 +13,7 @@ package body Tictactoe.Plateau is
 
    end ;
    -- La procedure [liberer] permet de liberer un emplacement dans un plateau
-   procedure Liberer(P_Plateau : in out Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) is
+   procedure Liberer(P_Plateau : Pointeur_Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) is
    begin
       case P_Plateau.Coordonnees(P_Ligne,P_Colonne).Vide is
          when true => null;
@@ -23,7 +23,7 @@ package body Tictactoe.Plateau is
       end case;
    end Liberer;
     -- La fonction [NouveauPlateau] retourne un nouveau plateau avec toutes les cases à vides
-   function NouveauPlateau return Plateau is
+   function NouveauPlateau return Pointeur_Plateau is
       P : Tableau2D;
    begin
       for L in Ligne'Range loop
@@ -31,15 +31,15 @@ package body Tictactoe.Plateau is
             Cellule.Liberer(Cell => P(L,C));
          end loop;
       end loop;
-      return (Coordonnees => P , Etat => 0 );
+      return new Plateau'(Coordonnees => P , Etat => 0 );
    end NouveauPlateau;
    -- La fonction [EstPlein] test si le plateau ne contient aucune case vide
-   function EstPlein(P_Plateau : Plateau) return boolean is
+   function EstPlein(P_Plateau : Pointeur_Plateau) return boolean is
    begin
       return P_Plateau.Etat >= 9;
    end EstPlein;
    -- La fonction [Gagnant] test si le pion passer en parametre a gagné
-   function Gagnant(P_Plateau : Plateau; P_Pion : Pion) return boolean is
+   function Gagnant(P_Plateau : Pointeur_Plateau; P_Pion : Pion) return boolean is
       V : Natural := 0;
       H : Natural := 0;
       D1 : Natural := 0;
@@ -75,7 +75,7 @@ package body Tictactoe.Plateau is
    end Gagnant;
 
     -- La fonction [Get_Cellule] retourne un pointeur sur une cellule a une position donnée
-   function Get_Cellule(P_Plateau : Plateau ; P_Ligne : Ligne ; P_Colonne: Colonne) return Pointeur_Cellule is
+   function Get_Cellule(P_Plateau : Pointeur_Plateau ; P_Ligne : Ligne ; P_Colonne: Colonne) return Pointeur_Cellule is
    begin
       return P_Plateau.Coordonnees(P_Ligne,P_Colonne);
    end;

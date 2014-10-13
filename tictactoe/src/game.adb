@@ -9,22 +9,22 @@ Package body Game is
       end if;
    end Get_Pion;
 
-   procedure Affichage(P_Plateau: Tictactoe.Plateau.Plateau) is
+   procedure Affichage(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau) is
    begin
       For i in ligne loop
          For j in Colonne loop
             Put("|");
-            if Tictactoe.Cellule.EstLibre(P_Plateau.Get_Cellule(i,j)) then
+            if Tictactoe.Cellule.EstLibre(Tictactoe.Plateau.Get_Cellule(P_Plateau,i,j)) then
                Put("  ");
             else
-                Put(Pion'Image(Get_Pion(P_Plateau.Get_Cellule(i,j))));
+                Put(Pion'Image(Get_Pion(Tictactoe.Plateau.Get_Cellule(P_Plateau,i,j))));
             end if;
          end loop;
          Put_Line("|");
       end loop;
    end Affichage;
 
-   procedure Jouer_Tour(P:in out Tictactoe.Plateau.PLateau;J:Joueur) is
+   procedure Jouer_Tour(P : Tictactoe.Plateau.Pointeur_Plateau;J:Joueur) is
       begin
       case Get_Type(J) is
       When 1=>

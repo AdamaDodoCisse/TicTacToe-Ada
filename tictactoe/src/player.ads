@@ -24,7 +24,7 @@ Package Player is
 
    procedure Set_Type(J:in out Joueur);
    --Permet au joueur Réel de jouer
-   procedure Reel(P:in out Tictactoe.Plateau.Plateau;J:Joueur;P_Pion:Pion);
+   procedure Reel(P: Tictactoe.Plateau.Pointeur_Plateau ;J:Joueur;P_Pion:Pion);
 
 private
    type Joueur is record
