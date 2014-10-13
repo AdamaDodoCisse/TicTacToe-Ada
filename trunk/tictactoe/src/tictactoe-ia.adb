@@ -5,12 +5,12 @@ with Tictactoe.Cellule; use Tictactoe.Cellule;
 package body Tictactoe.IA is
    -- La fonction min permet de simuler le pion adverse du pion passer en parametre et renvoie une evaluation de la case jouer
    -- Evaluation correspond à la valeur à retoourner lorsqu'on gagne
-   function Min(P_Plateau : Tictactoe.Plateau.Plateau ; P_Pion : Pion; Evaluation : integer; Profondeur:integer := 9) return integer;
+   function Min(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer; Profondeur:integer := 9) return integer;
     -- La fonction max permet de simuler le pion en parametre et renvoie une evaluation de la case jouer
-   function Max(P_Plateau : Tictactoe.Plateau.Plateau ; P_Pion : Pion; Evaluation : integer;Profondeur:integer := 9) return integer;
+   function Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer;Profondeur:integer := 9) return integer;
    -- La procedure Generique_Min_Max permet de faire jouer un joueur en fonction des parametres passés
 
-   procedure Generique_Min_Max(P_Plateau : in out Tictactoe.Plateau.Plateau ; P_Pion : Pion; Evaluation: integer := 1 ; Profondeur : integer := 9 ) is
+   procedure Generique_Min_Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation: integer := 1 ; Profondeur : integer := 9 ) is
       variante : Integer := Integer'First;
       eval : integer := 0;
       type Couple is record
@@ -26,7 +26,7 @@ package body Tictactoe.IA is
       end if;
       For L in Ligne'Range loop
          For C in Colonne'Range Loop
-            if Tictactoe.Cellule.EstLibre(P_Plateau.Get_Cellule( L, C)) then
+            if Tictactoe.Cellule.EstLibre(Get_Cellule(P_Plateau, L, C)) then
                Tracer(P_Plateau, L,C, P_Pion);
                eval := Min(P_Plateau , P_Pion, Evaluation,Profondeur );
                Liberer(P_Plateau,L,C);
@@ -53,19 +53,19 @@ package body Tictactoe.IA is
       end;
    end Generique_Min_Max;
 
-   procedure Facile( P_Plateau : in out Tictactoe.Plateau.Plateau ; P_Pion : Pion) is
+   procedure Facile( P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion) is
    begin
        Generique_Min_Max(P_Plateau => P_Plateau,
                         P_Pion    => P_Pion,Evaluation => -1);
    end Facile;
-   procedure Moyen( P_Plateau : in out Tictactoe.Plateau.Plateau ; P_Pion : Pion) is
+   procedure Moyen( P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion) is
    begin
       Generique_Min_Max(P_Plateau => P_Plateau,
                         P_Pion    => P_Pion,Evaluation => 1,
                         Profondeur => 2
                        );
    end Moyen;
-   procedure Difficile( P_Plateau : in out Tictactoe.Plateau.Plateau ; P_Pion : Pion) is
+   procedure Difficile( P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion) is
    begin
        Generique_Min_Max(P_Plateau => P_Plateau,
                            P_Pion    => P_Pion,Evaluation => 1);
@@ -75,10 +75,10 @@ package body Tictactoe.IA is
    -- Fonction Min --
    -- -------------------------------------------------------
 
-   function Min(P_Plateau : Tictactoe.Plateau.Plateau ; P_Pion : Pion ; Evaluation : integer ; profondeur : integer := 9 ) return integer is
+   function Min(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion ; Evaluation : integer ; profondeur : integer := 9 ) return integer is
       variante : Integer := Integer'Last;
       eval : integer := 0;
-      P_Plateau_aux : Tictactoe.Plateau.Plateau := P_Plateau;
+      P_Plateau_aux : Tictactoe.Plateau.Pointeur_Plateau := P_Plateau;
    begin
       if Gagnant(P_Plateau_aux, P_Pion) then
          return Evaluation;
@@ -88,7 +88,7 @@ package body Tictactoe.IA is
 
       For L in Ligne'Range loop
          For C in Colonne'Range Loop
-            if Tictactoe.Cellule.EstLibre(P_Plateau_aux.Get_Cellule( L, C)) then
+            if Tictactoe.Cellule.EstLibre(Get_Cellule(P_Plateau_aux, L, C)) then
                Tracer(P_Plateau_aux, L,C, Suivant(P_Pion));
                eval := Max(P_Plateau_aux , P_Pion, -Evaluation, profondeur - 1);
                Liberer(P_Plateau_aux,L,C);
@@ -105,10 +105,10 @@ package body Tictactoe.IA is
    -- Fonction Max --
    -- -------------------------------------------------------
 
-   function Max(P_Plateau : Tictactoe.Plateau.Plateau ; P_Pion : Pion; Evaluation : integer ; profondeur : integer := 9) return integer is
+   function Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer ; profondeur : integer := 9) return integer is
       variante : Integer := Integer'First;
       eval : integer := 0;
-      P_Plateau_aux : Tictactoe.Plateau.Plateau := P_Plateau;
+      P_Plateau_aux : Tictactoe.Plateau.Pointeur_Plateau:= P_Plateau;
    begin
       if Gagnant(P_Plateau_aux, Suivant(P_Pion)) then
          return Evaluation;
@@ -118,7 +118,7 @@ package body Tictactoe.IA is
 
       For L in Ligne'Range loop
          For C in Colonne'Range Loop
-            if Tictactoe.Cellule.EstLibre(P_Plateau_aux.Get_Cellule( L, C)) then
+            if Tictactoe.Cellule.EstLibre(Get_Cellule(P_Plateau_aux, L, C)) then
                Tracer(P_Plateau_aux, L,C, P_Pion);
                eval := Min(P_Plateau_aux , P_Pion, -Evaluation, profondeur - 1);
                Liberer(P_Plateau_aux,L,C);

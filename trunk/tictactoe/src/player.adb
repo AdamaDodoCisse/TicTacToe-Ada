@@ -40,7 +40,7 @@ Package body Player is
       J.Type_J:=Integer'Value(Get_Line);
    end Set_Type;
 
-   procedure Reel(P:in out Tictactoe.Plateau.Plateau;J:Joueur;P_Pion :Pion) is
+   procedure Reel(P: Tictactoe.Plateau.Pointeur_Plateau ;J:Joueur;P_Pion :Pion) is
       X:ligne;
       Y:Colonne;
    begin
@@ -49,7 +49,7 @@ Package body Player is
       X:=Natural'Value(Get_Line);
       Put_Line("colonne");
       Y:=Get_Line(1);
-      if Tictactoe.Cellule.EstLibre(P.Get_Cellule(X,Y)) then
+      if Tictactoe.Cellule.EstLibre(Tictactoe.plateau.Get_Cellule(p,X,Y)) then
          Tracer(P,X,Y,P_Pion);
       else
          Reel(P,J,P_Pion);
