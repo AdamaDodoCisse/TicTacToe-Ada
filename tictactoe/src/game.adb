@@ -66,7 +66,8 @@ Package body Game is
 
       procedure Jouer is
          J:Jeu;
-         cpt:Integer;
+      cpt:Integer;
+      choice : integer;
       begin
          cpt:=0;
          J.P:=NouveauPlateau;
@@ -76,7 +77,27 @@ Package body Game is
                Jouer_Tour(J.P,J.Tab_j((cpt mod 2)+1));
                --Put(ASCII.ESC & "[2J");
             cpt:=cpt+1;
-         end loop;
+      end loop;
+      if Gagnant(J.P,Get_Pion(J.Tab_j(1))) or Gagnant(J.P,Get_Pion(J.Tab_j(2))) then
+         if Gagnant(J.P,Get_Pion(J.tab_j(1))) then
+        	put_line( to_string(get_name(j.tab_j(1))) & " a gagné");
+
+       	 else
+         	put_line(to_string(get_name(j.tab_j(2))) & " a gagné");
+      	 end if ;
+         put_line("voulez-vous refaire une partie ? 1=> oui ; 0=> non  ");
+         choice := integer'value(get_line);
+         if choice = 1 then
+            Jouer;
+         end if ;
+      end if ;
+
+
+
+
+
+
+
       end Jouer;
 
    end Game;
