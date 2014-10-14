@@ -5,9 +5,9 @@ with Tictactoe.Cellule; use Tictactoe.Cellule;
 package body Tictactoe.IA is
    -- La fonction min permet de simuler le pion adverse du pion passer en parametre et renvoie une evaluation de la case jouer
    -- Evaluation correspond à la valeur à retoourner lorsqu'on gagne
-   function Min(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer; Profondeur:integer := 9) return integer;
+   function Min(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer; Profondeur:integer ) return integer;
     -- La fonction max permet de simuler le pion en parametre et renvoie une evaluation de la case jouer
-   function Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer;Profondeur:integer := 9) return integer;
+   function Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer;Profondeur:integer) return integer;
    -- La procedure Generique_Min_Max permet de faire jouer un joueur en fonction des parametres passés
 
    procedure Generique_Min_Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation: integer := 1 ; Profondeur : integer := 9 ) is
@@ -75,7 +75,7 @@ package body Tictactoe.IA is
    -- Fonction Min --
    -- -------------------------------------------------------
 
-   function Min(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion ; Evaluation : integer ; profondeur : integer := 9 ) return integer is
+   function Min(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion ; Evaluation : integer ; profondeur : integer  ) return integer is
       variante : Integer := Integer'Last;
       eval : integer := 0;
       P_Plateau_aux : Tictactoe.Plateau.Pointeur_Plateau := P_Plateau;
@@ -105,7 +105,7 @@ package body Tictactoe.IA is
    -- Fonction Max --
    -- -------------------------------------------------------
 
-   function Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer ; profondeur : integer := 9) return integer is
+   function Max(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion; Evaluation : integer ; profondeur : integer) return integer is
       variante : Integer := Integer'First;
       eval : integer := 0;
       P_Plateau_aux : Tictactoe.Plateau.Pointeur_Plateau:= P_Plateau;
