@@ -7,7 +7,7 @@ use Gtk.Enums;
 with Gtk.Box;
 with Gtk.Widget; use Gtk.Widget;
 with Gdk.Color; use Gdk.Color;
-
+with Gtk.Alignment;
 package body Graphisme is
 
    -------------------------------------------
@@ -187,27 +187,36 @@ package body Graphisme is
       Box : Gtk.Box.Gtk_Hbox) is
       Box_H1 :Gtk.Box.Gtk_Hbox;
       Box_H2 : Gtk.Box.Gtk_Hbox;
-      Lbl : Gtk.Label.Gtk_Label;
-      LbL2 : Gtk.Label.Gtk_Label;
+      Lbl : Gtk.Image.Gtk_Image;
+      LbL2 : Gtk.Image.Gtk_Image;
       Box_V : Gtk.Box.Gtk_Vbox;
       Btn : Gtk.Button.Gtk_Button;
+      Align : Gtk.Alignment.Gtk_Alignment;
+      Align2 : Gtk.Alignment.Gtk_Alignment;
+      Align3  :Gtk.Alignment.Gtk_Alignment;
    begin
+      Gtk.Alignment.Gtk_New(Align,0.5,0.5,0.0, 0.0);
+      Gtk.Alignment.Gtk_New(Align2,0.5,0.5,0.0, 0.0);
+      Gtk.Alignment.Gtk_New(Align3,0.0,0.0,0.5, 0.0);
       Gtk.Window.Gtk_New(P_Fenetre.Option.Window, Gtk.Enums.Window_Popup);
       Gtk.Box.Gtk_New_Vbox(Box_V,false,0);
       Gtk.Combo_Box_Text.Gtk_New(P_Fenetre.Option.Combo_Box_Premier_Joueur);
       Gtk.Combo_Box_Text.Gtk_New(P_Fenetre.Option.Combo_Box_Second_Joueur);
       Gtk.Button.Gtk_New(Btn, "Suivant");
       Gtk.Box.Gtk_New_Hbox(Box_H1, false,0);
-      Gtk.Label.Gtk_New(LbL, "Joueur X ");
+      Gtk.Image.Gtk_New(LbL,"../images/icon-x.png");
       Box_H1.add(lbl);
       Box_H1.add(P_Fenetre.Option.Combo_Box_Premier_Joueur);
       Gtk.Box.Gtk_New_Hbox(Box_H2, false,0);
-      Gtk.Label.Gtk_New(LbL2, "Joueur O");
+      Gtk.Image.Gtk_New(LbL2, "../images/icon-o.png");
       Box_H2.add(lbl2);
       Box_H2.add(P_Fenetre.Option.Combo_Box_Second_Joueur);
-      Box_V.Add(Box_H1);
-      Box_V.Add(Box_H2);
-      Box_V.Add(Btn);
+      Align.Add(Box_H1);
+      Align2.Add(Box_H2);
+      Align3.Add(Btn);
+      Box_V.Add(Align);
+      Box_V.Add(Align2);
+      Box_V.add(Align3);
       Ajouter_Items_Option(P_Fenetre);
       Box.add(Box_V);
       P_User_Callback.Connect(btn, "clicked", Button_Commencer_Evenement'ACCESS, P_Fenetre );
