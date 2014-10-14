@@ -31,17 +31,6 @@ package body Graphisme is
       end loop;
    end;
 
-   procedure Affiche_Gagnant(P_Fenetre : Pointeur_Fenetre)
-   is begin
-      if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau, P_Fenetre.Option.Pion) then
-         P_Fenetre.Terminer := true;
-         P_Fenetre.Scene.Menu.Label.Set_Label("Le joueur " & Tictactoe.Pion'Image(P_Fenetre.Option.Pion) & " gagne ");
-      elsif Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau) then
-         P_Fenetre.Terminer := true;
-         P_Fenetre.Scene.Menu.Label.Set_Label("Match Null");
-      end if;
-   end;
-
    procedure Get_Coordonnees
      (P_Gtk_Button : access Gtk.Button.Gtk_Button_Record'Class ;
       P_Ligne : in out Tictactoe.Ligne;
@@ -51,62 +40,87 @@ package body Graphisme is
       P_Colonne := Tictactoe.Colonne'Value( P_Gtk_Button.Get_Name(P_Gtk_Button.Get_Name'First + 2..P_Gtk_Button.Get_Name'Last));
    end Get_Coordonnees;
 
+   function estTourDe(P_Fenetre : Pointeur_Fenetre ; Valeur : String) return boolean
+   is begin
+      return (P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text = Valeur and
+                P_Fenetre.Option.Pion = Tictactoe.X ) or (
+                                                          P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text = Valeur and
+                                                            P_Fenetre.Option.Pion = Tictactoe.O and not P_Fenetre.Terminer) ;
+   end estTourDe;
+
+   function TourHumain( P_Fenetre :  Pointeur_Fenetre) return boolean
+   is begin
+      return estTourDe(P_Fenetre => P_Fenetre, valeur => "Humain");
+   end TourHumain;
+
+   function TourCPU(P_Fenetre : Pointeur_Fenetre) return boolean
+   is
+   begin
+      return not estTourDe(P_Fenetre,  "") and not estTourDe(P_Fenetre, "Humain") ;
+   end TourCPU;
+
    procedure Jouer_CPU( P_Fenetre : Pointeur_Fenetre) is
    begin
-      if P_Fenetre.Terminer then
-         P_Fenetre.Scene.Plateau := Tictactoe.Plateau.NouveauPlateau;
-         P_Fenetre.Terminer := false;
-         redesinner(P_Fenetre );
-         return;
-      end if;
-      if P_Fenetre.Option.Pion = Tictactoe.X and not P_Fenetre.Terminer then
-         if P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text /= "Humain"
-            and P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text /= ""then
-            Intelligences(Niveau_Jeu'Value(P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text)).all(P_Fenetre.Scene.Plateau, P_Fenetre.Option.Pion);
-            redesinner(P_Fenetre);
-            Affiche_Gagnant(P_fenetre);
-            P_Fenetre.Option.Pion := Tictactoe.suivant(P_Fenetre.Option.Pion);
+      if TourCPU(P_Fenetre) then
+         if P_Fenetre.Option.Pion = Tictactoe.X then
+            Intelligences(Niveau_Jeu'Value(P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text)).all(P_Fenetre.Scene.Plateau , Tictactoe.X);
+         else
+            Intelligences(Niveau_Jeu'Value(P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text)).all(P_Fenetre.Scene.Plateau , Tictactoe.O);
          end if;
-      elsif P_Fenetre.Option.Pion = Tictactoe.O and not P_Fenetre.Terminer then
-         if P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text /= "Humain" and
-           P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text /= ""
-         then
-            Intelligences(Niveau_Jeu'Value(P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text)).all(P_Fenetre.Scene.Plateau, P_Fenetre.Option.Pion);
-            redesinner(P_Fenetre);
-            Affiche_Gagnant(P_fenetre);
-            P_Fenetre.Option.Pion := Tictactoe.suivant(P_Fenetre.Option.Pion);
+         if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau , P_Fenetre.Option.Pion) then
+            P_Fenetre.Terminer := true;
          end if;
+         if Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau) then
+            P_Fenetre.Terminer := true;
+         end if;
+         redesinner(P_Fenetre);
+         P_Fenetre.Option.Pion := Tictactoe.suivant(P_Fenetre.Option.Pion);
       end if;
-   end Jouer_CPU;
 
+
+   end Jouer_CPU;
 
    procedure Buttons_Click_Evenement(Button : access Gtk.Button.Gtk_Button_Record'Class; P_Fenetre : Pointeur_Fenetre ) is
       P_Ligne : Tictactoe.Ligne := Tictactoe.Ligne'First;
       P_Colonne :Tictactoe.Colonne := Tictactoe.Colonne'First;
    begin
-      P_Fenetre.Terminer := P_Fenetre.Terminer or Tictactoe.Plateau.estPlein(P_Fenetre.Scene.Plateau);
-      if P_Fenetre.Terminer then
-         return;
-      end if;
-      Get_Coordonnees(Button, P_Ligne, P_Colonne);
-      Couleur(Button, "#000");
-      if  Tictactoe.Cellule.EstLibre(Tictactoe.Plateau.Get_Cellule(P_Fenetre.Scene.Plateau,P_Ligne, P_Colonne)) then
-         Tictactoe.Plateau.Tracer(P_Fenetre.Scene.Plateau, P_Ligne,P_Colonne,P_Fenetre.Option.Pion) ;
-         redesinner(P_Fenetre);
-         if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau, P_Fenetre.Option.Pion) then
-            P_Fenetre.Terminer := True;
-            P_Fenetre.Scene.Menu.Label.Set_Label("Le joueur " & Tictactoe.Pion'Image(P_Fenetre.Option.Pion) & " gagne ");
+      Get_Coordonnees(Button,P_Ligne,P_Colonne);
+      if Tictactoe.Cellule.EstLibre(Tictactoe.Plateau.Get_Cellule(P_Fenetre.Scene.Plateau,P_Ligne , P_Colonne)) then
+         if TourHumain(P_Fenetre) then
+            Tictactoe.Plateau.Tracer(P_Fenetre.Scene.Plateau, P_Ligne  , P_Colonne, P_Fenetre.Option.Pion);
+            P_Fenetre.Option.Pion := Tictactoe.suivant(P_Fenetre.Option.Pion);
+            redesinner(P_Fenetre);
+            if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau , P_Fenetre.Option.Pion) then
+               P_Fenetre.Terminer := true;
+            end if;
+            if Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau) then
+               P_Fenetre.Terminer := true;
+            end if;
          end if;
-         P_Fenetre.Option.Pion := Tictactoe.suivant(P_Fenetre.Option.Pion);
-         Jouer_CPU( P_Fenetre);
       end if;
+
    end Buttons_Click_Evenement;
 
 
 
    procedure Button_Commencer_Evenement(Button : access Gtk.Button.Gtk_Button_Record'Class; P_Fenetre : Pointeur_Fenetre ) is
    begin
-      Jouer_CPU( P_Fenetre);
+
+      if Button.Get_Label = "Rejouer" then
+         P_Fenetre.Scene.Plateau := Tictactoe.Plateau.NouveauPlateau;
+         P_Fenetre.Terminer := false;
+         P_Fenetre.Option.Pion := Tictactoe.X;
+         Button.Set_Label(Label => "Suivant");
+         redesinner(P_Fenetre);
+      end if;
+
+      if TourCPU(P_Fenetre) then
+         Jouer_CPU( P_Fenetre);
+      end if;
+
+      if P_Fenetre.Terminer then
+         Button.Set_Label(Label => "Rejouer");
+      end if;
    end Button_Commencer_Evenement;
 
 
@@ -211,6 +225,7 @@ package body Graphisme is
       Box.Set_Size_Request(50,100);
       Gtk.Window.Gtk_New(P_Fenetre.Scene.Window, Gtk.Enums.Window_Toplevel);
       Couleur(P_Fenetre.Scene.Window, "#fff");
+      P_Fenetre.Scene.Window.Set_Resizable(false);
       Gtk.Label.Gtk_New(P_Fenetre.Scene.Menu.Label, "");
       Initialize_Scene(P_Fenetre,Box,Table,Box_V);
       Initialize_Option(P_Fenetre, Box);
