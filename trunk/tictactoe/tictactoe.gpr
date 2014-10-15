@@ -9,5 +9,8 @@ project Tictactoe is
       for Documentation_Dir use "doc";
    end Ide;
 
+   for Source_Files use ("aleatoire.adb", "aleatoire.ads", "joueurs.adb", "joueurs.ads", "main.adb", "Partie.adb", "Partie.ads", "tictactoe-cellule.adb", "tictactoe-cellule.ads", "tictactoe-ia.adb", "tictactoe-ia.ads", 
+      "tictactoe-plateau.adb", "tictactoe-plateau.ads", "tictactoe.ads");
+
 end Tictactoe;
 
