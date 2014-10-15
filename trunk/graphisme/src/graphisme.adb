@@ -92,7 +92,7 @@ package body Graphisme is
    begin
       if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.X) then
          P_Fenetre.Terminer := True;
-       --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
+     --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
       elsif Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.O) then
          P_Fenetre.Terminer := True;
       --   P_Fenetre.Scene.Menu.Info.Set_From_Resource("../images/victoire-o.png");
