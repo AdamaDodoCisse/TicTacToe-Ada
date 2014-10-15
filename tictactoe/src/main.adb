@@ -1,5 +1,5 @@
-with Game;
+with Partie;
 procedure main is
 begin
-   Game.Jouer;
+   Partie.Jouer;
 end main;
