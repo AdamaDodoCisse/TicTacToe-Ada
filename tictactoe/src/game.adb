@@ -15,9 +15,9 @@ Package body Game is
          For j in Colonne loop
             Put("|");
             if Tictactoe.Cellule.EstLibre(Tictactoe.Plateau.Get_Cellule(P_Plateau,i,j)) then
-               Put("  ");
+               Put(" ");
             else
-                Put(Pion'Image(Get_Pion(Tictactoe.Plateau.Get_Cellule(P_Plateau,i,j))));
+               Put(Pion'Image(Get_Pion(Tictactoe.Plateau.Get_Cellule(P_Plateau,i,j))));
             end if;
          end loop;
          Put_Line("|");
@@ -25,30 +25,28 @@ Package body Game is
    end Affichage;
 
    procedure Jouer_Tour(P : Tictactoe.Plateau.Pointeur_Plateau;J:Joueur) is
-      begin
+   begin
       case Get_Type(J) is
       When 1=>
          Reel(P,J,Get_Pion(J));
       when 2=>
-         Put_Line("Facile");
+
          Facile(P,Get_Pion(J));
       when 3=>
-         Put_Line("Moyen");
          Moyen(P,Get_Pion(J));
       when 4=>
-         Put_Line("Difficile");
          Difficile(P,Get_Pion(J));
       end case;
-
    end Jouer_Tour;
 
-      Procedure Inscrire_Joueurs(J:in out Jeu) is
-         J1:Joueur;
-         J2:Joueur;
-      begin
-         For i in 1..2 loop
-            Put_Line("Joueur numéro " & Integer'Image(i) & " Saisissez votre nom");
-            case i is
+   Procedure Inscrire_Joueurs(J:in out Jeu) is
+      J1:Joueur;
+      J2:Joueur;
+   begin
+      For i in 1..2 loop
+         Put_Line(ASCII.ESC & "[2J");
+         Put_Line("Joueur numéro " & Integer'Image(i) & " Saisissez votre nom");
+         case i is
             when 1=>
                Set_Name(J1,To_Unbounded_String(Get_Line));
                Set_Id(J1,i);
@@ -59,45 +57,39 @@ Package body Game is
                Set_Id(J2,i);
                Set_Type(J2);
                J.Tab_j(i):=J2;
-            end case;
-         end loop;
-         --Put_Line(ASCII.ESC & "[2J");
-      end Inscrire_Joueurs;
+         end case;
+      end loop;
+      Put_Line(ASCII.ESC & "[2J");
+   end Inscrire_Joueurs;
 
-      procedure Jouer is
-         J:Jeu;
+   procedure Jouer is
+            J:Jeu;
       cpt:Integer;
       choice : integer;
-      begin
-         cpt:=0;
-         J.P:=NouveauPlateau;
-         Inscrire_Joueurs(J);
-         while EstPlein(J.P)=False and not Gagnant(J.P,Get_Pion(J.Tab_j(1))) and not Gagnant(J.P,Get_Pion(J.Tab_j(2))) loop
-            Affichage(J.P);
-               Jouer_Tour(J.P,J.Tab_j((cpt mod 2)+1));
-               --Put(ASCII.ESC & "[2J");
-            cpt:=cpt+1;
+   begin
+      cpt:=0;
+      J.P:=NouveauPlateau;
+      Inscrire_Joueurs(J);
+      while EstPlein(J.P)=False and not Gagnant(J.P,Get_Pion(J.Tab_j(1))) and not Gagnant(J.P,Get_Pion(J.Tab_j(2))) loop
+         Affichage(J.P);
+         Jouer_Tour(J.P,J.Tab_j((cpt mod 2)+1));
+         Put(ASCII.ESC & "[2J");
+         cpt:=cpt+1;
       end loop;
+      Affichage(J.P);
       if Gagnant(J.P,Get_Pion(J.Tab_j(1))) or Gagnant(J.P,Get_Pion(J.Tab_j(2))) then
          if Gagnant(J.P,Get_Pion(J.tab_j(1))) then
-        	put_line( to_string(get_name(j.tab_j(1))) & " a gagné");
+            put_line( to_string(get_name(j.tab_j(1))) & " a gagné");
 
-       	 else
-         	put_line(to_string(get_name(j.tab_j(2))) & " a gagné");
-      	 end if ;
+         else
+            put_line(to_string(get_name(j.tab_j(2))) & " a gagné");
+         end if ;
          put_line("voulez-vous refaire une partie ? 1=> oui ; 0=> non  ");
          choice := integer'value(get_line);
          if choice = 1 then
             Jouer;
          end if ;
       end if ;
+   end Jouer;
 
-
-
-
-
-
-
-      end Jouer;
-
-   end Game;
+end Game;
