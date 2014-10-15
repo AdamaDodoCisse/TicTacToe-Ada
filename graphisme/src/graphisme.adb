@@ -92,7 +92,6 @@ package body Graphisme is
    begin
       if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.X) then
          P_Fenetre.Terminer := True;
-         P_Fenetre.Scene.Menu.Info.set_Fro
        --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
       elsif Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.O) then
          P_Fenetre.Terminer := True;
@@ -123,6 +122,10 @@ package body Graphisme is
             redesinner(P_Fenetre);
             Barre_info(P_Fenetre);
          end if;
+      end if;
+
+       if TourCPU(P_Fenetre) then
+         Jouer_CPU( P_Fenetre);
       end if;
 
    end Buttons_Click_Evenement;
@@ -312,8 +315,6 @@ package body Graphisme is
       end if;
       return Img;
    end Cellule_En_Image;
-
-
 begin
    gtk.main.Init;
 end Graphisme;
