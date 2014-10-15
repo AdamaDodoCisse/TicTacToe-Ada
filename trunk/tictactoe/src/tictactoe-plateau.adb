@@ -1,5 +1,5 @@
 package body Tictactoe.Plateau is
-   -- La procedure [tracer] permet d'inserer un pion dans un plateau
+   -- La procedure [tracer] permet d'inserer un pion dans un plateau dont les coordonnées sont passées en paramètre
    procedure Tracer(P_Plateau : Pointeur_Plateau; P_Ligne : Ligne ; P_Colonne : Colonne ; P_Pion : Pion ) is
    begin
       case P_Plateau.Coordonnees(P_Ligne,P_Colonne).Vide is
@@ -10,9 +10,10 @@ package body Tictactoe.Plateau is
          when false =>
             null;
       end case;
-
    end ;
-   -- La procedure [liberer] permet de liberer un emplacement dans un plateau
+
+
+   -- La procedure [liberer] permet de liberer une cellule dans le plateau dont les coordonnées sont passées en paramètre
    procedure Liberer(P_Plateau : Pointeur_Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) is
    begin
       case P_Plateau.Coordonnees(P_Ligne,P_Colonne).Vide is
@@ -22,6 +23,8 @@ package body Tictactoe.Plateau is
             P_Plateau.Etat := P_Plateau.Etat - 1;
       end case;
    end Liberer;
+
+
     -- La fonction [NouveauPlateau] retourne un nouveau plateau avec toutes les cases à vides
    function NouveauPlateau return Pointeur_Plateau is
       P : Tableau2D;
