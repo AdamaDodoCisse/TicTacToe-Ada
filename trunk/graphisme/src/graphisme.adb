@@ -92,17 +92,25 @@ package body Graphisme is
    begin
       if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.X) then
          P_Fenetre.Terminer := True;
+<<<<<<< .mine
+         P_Fenetre.Scene.Menu.Info.Set("../images/victoire-x.png");
+         --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
+=======
      --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
+>>>>>>> .r26
       elsif Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.O) then
          P_Fenetre.Terminer := True;
-      --   P_Fenetre.Scene.Menu.Info.Set_From_Resource("../images/victoire-o.png");
+         P_Fenetre.Scene.Menu.Info.Set("../images/victoire-o.png");
       end if;
       if P_Fenetre.Terminer then return ; else
          if Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau) then
             P_Fenetre.Terminer := True;
-         --   P_Fenetre.Scene.Menu.Info.Set_From_Resource("../images/null.png");
+            P_Fenetre.Scene.Menu.Info.Set("../images/null.png");
+         else
+            P_Fenetre.Scene.Menu.Info.Set("../images/initial.png");
          end if;
       end if;
+
    end Barre_info;
 
    ----------------------------------------------
@@ -127,6 +135,7 @@ package body Graphisme is
        if TourCPU(P_Fenetre) then
          Jouer_CPU( P_Fenetre);
       end if;
+      Barre_info(P_Fenetre);
 
    end Buttons_Click_Evenement;
 
@@ -148,7 +157,7 @@ package body Graphisme is
          P_Fenetre.Scene.Plateau := Tictactoe.Plateau.NouveauPlateau;
          P_Fenetre.Terminer := false;
          P_Fenetre.Option.Pion := Tictactoe.X;
-         Button.Set_Label(Label => "Suivant");
+         Button.Set_Label(Label => "Jouer");
          redesinner(P_Fenetre);
       end if;
 
@@ -243,7 +252,7 @@ package body Graphisme is
       Gtk.Box.Gtk_New_Vbox(Box_V,false,0);
       Gtk.Combo_Box_Text.Gtk_New(P_Fenetre.Option.Combo_Box_Premier_Joueur);
       Gtk.Combo_Box_Text.Gtk_New(P_Fenetre.Option.Combo_Box_Second_Joueur);
-      Gtk.Button.Gtk_New(Btn, "Suivant");
+      Gtk.Button.Gtk_New(Btn, "Jouer");
       Gtk.Box.Gtk_New_Hbox(Box_H1, false,0);
       Gtk.Image.Gtk_New(LbL,"../images/icon-x.png");
       Box_H1.add(lbl);
