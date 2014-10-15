@@ -66,7 +66,9 @@ package body Tictactoe.Plateau is
          V := 0;
          H := 0;
          For C in Colonne'Range loop
+            --si la case n'est pas libre
             if not EstLibre(Cell => P_Plateau.Coordonnees(L,C)) then
+               --et si le pion correspond à celui passé en paramètre
                if Get_Pion(Cell => P_Plateau.Coordonnees(L,C)) = P_Pion then
                   H := H + 1;
                   if Ligne'Pos(L) - Ligne'Pos(Ligne'First)  = Colonne'Pos(C) - Colonne'Pos(Colonne'First)  then D1 := D1 + 1; end if;
