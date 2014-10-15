@@ -1,12 +1,15 @@
 package body Tictactoe.Plateau is
+
    -- La procedure [tracer] permet d'inserer un pion dans un plateau dont les coordonnées sont passées en paramètre
    procedure Tracer(P_Plateau : Pointeur_Plateau; P_Ligne : Ligne ; P_Colonne : Colonne ; P_Pion : Pion ) is
    begin
       case P_Plateau.Coordonnees(P_Ligne,P_Colonne).Vide is
+         -- si la case est vide on lui passe les coordonnées et le type de pion passés en paramètre
       when true =>
           Tracer(Cell => P_Plateau.Coordonnees(P_Ligne,P_Colonne),
                  Pi   => P_Pion);
          P_Plateau.Etat := P_Plateau.Etat + 1;
+         -- si elle possède déjà un pion, on ne fait rien
          when false =>
             null;
       end case;
@@ -16,8 +19,10 @@ package body Tictactoe.Plateau is
    -- La procedure [liberer] permet de liberer une cellule dans le plateau dont les coordonnées sont passées en paramètre
    procedure Liberer(P_Plateau : Pointeur_Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) is
    begin
+      -- si la case est deja vide on ne fait rien
       case P_Plateau.Coordonnees(P_Ligne,P_Colonne).Vide is
          when true => null;
+            -- si la case n'est pas vide, on la libère
          when false =>
             Liberer(Cell => P_Plateau.Coordonnees(P_Ligne,P_Colonne));
             P_Plateau.Etat := P_Plateau.Etat - 1;
@@ -27,9 +32,10 @@ package body Tictactoe.Plateau is
 
     -- La fonction [NouveauPlateau] retourne un nouveau plateau avec toutes les cases à vides
    function NouveauPlateau return Pointeur_Plateau is
+      --tableau à deux dimention contenant des lignes et des colonnes
       P : Tableau2D;
    begin
-      --parcour du plateau
+      --parcours du plateau
       for L in Ligne'Range loop
          for C in Colonne'Range loop
             --initialisation des cellules
@@ -43,15 +49,19 @@ package body Tictactoe.Plateau is
    -- La fonction [EstPlein] test si le plateau ne contient aucune case vide
    function EstPlein(P_Plateau : Pointeur_Plateau) return boolean is
    begin
+      --Si état vaut 9, cela signifie que toutes les cases sont jouées.
       return P_Plateau.Etat >= 9;
    end EstPlein;
+
+
    -- La fonction [Gagnant] test si le pion passer en parametre a gagné
    function Gagnant(P_Plateau : Pointeur_Plateau; P_Pion : Pion) return boolean is
-      V : Natural := 0;
-      H : Natural := 0;
-      D1 : Natural := 0;
-      D2 : Natural := 0;
+      V : Natural := 0; -- représente les verticals
+      H : Natural := 0; -- représente les horizontals
+      D1 : Natural := 0; -- représente les diagonales
+      D2 : Natural := 0; -- idem
    begin
+      -- parcour des lignes
      For L in Ligne'Range loop
          V := 0;
          H := 0;
