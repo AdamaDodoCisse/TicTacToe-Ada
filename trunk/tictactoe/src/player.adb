@@ -21,12 +21,12 @@ Package body Player is
 
 
    procedure Set_Name(J:in out Joueur;N:Unbounded_String) is
-      begin
+   begin
       J.Name:=N;
    end Set_Name;
 
    procedure Set_Id(J:in out Joueur;I:Natural) is
-      begin
+   begin
       J.Id:=I;
    end Set_Id;
 
@@ -38,6 +38,11 @@ Package body Player is
       Put_Line("3=> CPU Moyen");
       Put_Line("4=> CPU Difficile");
       J.Type_J:=Integer'Value(Get_Line);
+   exception
+      when Constraint_Error=>
+         Put_Line(ASCII.ESC & "[2J");
+         Put_Line("Saisissez un type valide!!!");
+         Set_Type(J);
    end Set_Type;
 
    procedure Reel(P: Tictactoe.Plateau.Pointeur_Plateau ;J:Joueur;P_Pion :Pion) is
@@ -56,7 +61,7 @@ Package body Player is
       end if;
    exception
       when Constraint_Error =>
-            Put_Line("Mauvaise Coordonnées");
+         Put_Line("Mauvaise Coordonnées");
          Reel(P,J,P_Pion);
    end Reel;
 
