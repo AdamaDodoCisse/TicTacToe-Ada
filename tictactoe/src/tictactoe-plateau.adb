@@ -29,13 +29,17 @@ package body Tictactoe.Plateau is
    function NouveauPlateau return Pointeur_Plateau is
       P : Tableau2D;
    begin
+      --parcour du plateau
       for L in Ligne'Range loop
          for C in Colonne'Range loop
+            --initialisation des cellules
             Cellule.Liberer(Cell => P(L,C));
          end loop;
       end loop;
       return new Plateau'(Coordonnees => P , Etat => 0 );
    end NouveauPlateau;
+
+
    -- La fonction [EstPlein] test si le plateau ne contient aucune case vide
    function EstPlein(P_Plateau : Pointeur_Plateau) return boolean is
    begin
