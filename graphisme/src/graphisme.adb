@@ -92,23 +92,16 @@ package body Graphisme is
    begin
       if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.X) then
          P_Fenetre.Terminer := True;
-<<<<<<< .mine
          P_Fenetre.Scene.Menu.Info.Set("../images/victoire-x.png");
          --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
-=======
-     --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
->>>>>>> .r26
       elsif Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.O) then
          P_Fenetre.Terminer := True;
          P_Fenetre.Scene.Menu.Info.Set("../images/victoire-o.png");
-      end if;
-      if P_Fenetre.Terminer then return ; else
-         if Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau) then
-            P_Fenetre.Terminer := True;
-            P_Fenetre.Scene.Menu.Info.Set("../images/null.png");
-         else
-            P_Fenetre.Scene.Menu.Info.Set("../images/initial.png");
-         end if;
+      elsif Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau)  then
+         P_Fenetre.Terminer := True;
+         P_Fenetre.Scene.Menu.Info.Set("../images/null.png");
+      else
+         P_Fenetre.Scene.Menu.Info.Set("../images/initial.png");
       end if;
 
    end Barre_info;
@@ -148,7 +141,6 @@ package body Graphisme is
 
    procedure Button_Commencer_Evenement(Button : access Gtk.Button.Gtk_Button_Record'Class; P_Fenetre : Pointeur_Fenetre ) is
    begin
-      Barre_info(P_Fenetre);
       if TourCPU(P_Fenetre) then
          Jouer_CPU( P_Fenetre);
       end if;
@@ -160,11 +152,11 @@ package body Graphisme is
          Button.Set_Label(Label => "Jouer");
          redesinner(P_Fenetre);
       end if;
-
+      Barre_info(P_Fenetre);
       if P_Fenetre.Terminer then
          Button.Set_Label(Label => "Rejouer");
       end if;
-      Barre_info(P_Fenetre);
+
    end Button_Commencer_Evenement;
 
 
