@@ -46,7 +46,7 @@ private
       Quitter : Gtk.Button.Gtk_Button;
       Recommencer : Gtk.Button.Gtk_Button;
       Option : Gtk.Button.Gtk_Button;
-      Label : Gtk.Label.Gtk_Label;
+      Info : Gtk.Image.Gtk_Image;
       Commencer : boolean := false;
    end record;
    Type Pointeur_Type_Menu is access Type_Menu;

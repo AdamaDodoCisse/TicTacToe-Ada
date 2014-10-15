@@ -8,6 +8,7 @@ with Gtk.Box;
 with Gtk.Widget; use Gtk.Widget;
 with Gdk.Color; use Gdk.Color;
 with Gtk.Alignment;
+with Gtk.Hbutton_Box;
 package body Graphisme is
 
    -------------------------------------------
@@ -18,9 +19,6 @@ package body Graphisme is
    Begin
       Gw.Modify_Bg(State_Normal, Parse(C));
    End Couleur;
-   ----------------------------------------------
-   -- Gestion des evenements --
-   ----------------------------------------------
 
    procedure redesinner(P_Fenetre :Pointeur_Fenetre) is
    begin
@@ -42,10 +40,13 @@ package body Graphisme is
 
    function estTourDe(P_Fenetre : Pointeur_Fenetre ; Valeur : String) return boolean
    is begin
-      return (P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text = Valeur and
+      P_Fenetre.Terminer := Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau, Tictactoe.X) or
+        Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau, Tictactoe.O) ;
+      P_Fenetre.Terminer := P_Fenetre.Terminer or Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau);
+      return  (not P_Fenetre.Terminer) and ( (P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text = Valeur and
                 P_Fenetre.Option.Pion = Tictactoe.X ) or (
                                                           P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text = Valeur and
-                                                            P_Fenetre.Option.Pion = Tictactoe.O and not P_Fenetre.Terminer) ;
+                                                            P_Fenetre.Option.Pion = Tictactoe.O) );
    end estTourDe;
 
    function TourHumain( P_Fenetre :  Pointeur_Fenetre) return boolean
@@ -56,11 +57,18 @@ package body Graphisme is
    function TourCPU(P_Fenetre : Pointeur_Fenetre) return boolean
    is
    begin
-      return not estTourDe(P_Fenetre,  "") and not estTourDe(P_Fenetre, "Humain") ;
+      for i in Niveau_Jeu'Range loop
+         if estTourDe(P_Fenetre,  Niveau_Jeu'Image(i))  then
+            return true;
+         end if;
+      end loop;
+      return false;
+
    end TourCPU;
 
    procedure Jouer_CPU( P_Fenetre : Pointeur_Fenetre) is
    begin
+
       if TourCPU(P_Fenetre) then
          if P_Fenetre.Option.Pion = Tictactoe.X then
             Intelligences(Niveau_Jeu'Value(P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text)).all(P_Fenetre.Scene.Plateau , Tictactoe.X);
@@ -80,31 +88,58 @@ package body Graphisme is
 
    end Jouer_CPU;
 
+   procedure Barre_info(P_Fenetre : Pointeur_Fenetre) is
+   begin
+      if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.X) then
+         P_Fenetre.Terminer := True;
+         P_Fenetre.Scene.Menu.Info.set_Fro
+       --  Gtk.Image.Gtk_New(,"../images/victoire-x.png");
+      elsif Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau,Tictactoe.O) then
+         P_Fenetre.Terminer := True;
+      --   P_Fenetre.Scene.Menu.Info.Set_From_Resource("../images/victoire-o.png");
+      end if;
+      if P_Fenetre.Terminer then return ; else
+         if Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau) then
+            P_Fenetre.Terminer := True;
+         --   P_Fenetre.Scene.Menu.Info.Set_From_Resource("../images/null.png");
+         end if;
+      end if;
+   end Barre_info;
+
+   ----------------------------------------------
+   -- Gestion des evenements --
+   ----------------------------------------------
+
    procedure Buttons_Click_Evenement(Button : access Gtk.Button.Gtk_Button_Record'Class; P_Fenetre : Pointeur_Fenetre ) is
       P_Ligne : Tictactoe.Ligne := Tictactoe.Ligne'First;
       P_Colonne :Tictactoe.Colonne := Tictactoe.Colonne'First;
    begin
+      Barre_info(P_Fenetre);
       Get_Coordonnees(Button,P_Ligne,P_Colonne);
       if Tictactoe.Cellule.EstLibre(Tictactoe.Plateau.Get_Cellule(P_Fenetre.Scene.Plateau,P_Ligne , P_Colonne)) then
          if TourHumain(P_Fenetre) then
             Tictactoe.Plateau.Tracer(P_Fenetre.Scene.Plateau, P_Ligne  , P_Colonne, P_Fenetre.Option.Pion);
             P_Fenetre.Option.Pion := Tictactoe.suivant(P_Fenetre.Option.Pion);
             redesinner(P_Fenetre);
-            if Tictactoe.Plateau.Gagnant(P_Fenetre.Scene.Plateau , P_Fenetre.Option.Pion) then
-               P_Fenetre.Terminer := true;
-            end if;
-            if Tictactoe.Plateau.EstPlein(P_Fenetre.Scene.Plateau) then
-               P_Fenetre.Terminer := true;
-            end if;
+            Barre_info(P_Fenetre);
          end if;
       end if;
 
    end Buttons_Click_Evenement;
 
+   procedure Quitter_Evenement(Button : access Gtk.Button.Gtk_Button_Record'Class; P_Fenetre : Pointeur_Fenetre) is
+   begin
+      Gtk.Main.Main_Quit;
+   end Quitter_Evenement;
+
 
 
    procedure Button_Commencer_Evenement(Button : access Gtk.Button.Gtk_Button_Record'Class; P_Fenetre : Pointeur_Fenetre ) is
    begin
+      Barre_info(P_Fenetre);
+      if TourCPU(P_Fenetre) then
+         Jouer_CPU( P_Fenetre);
+      end if;
 
       if Button.Get_Label = "Rejouer" then
          P_Fenetre.Scene.Plateau := Tictactoe.Plateau.NouveauPlateau;
@@ -114,13 +149,10 @@ package body Graphisme is
          redesinner(P_Fenetre);
       end if;
 
-      if TourCPU(P_Fenetre) then
-         Jouer_CPU( P_Fenetre);
-      end if;
-
       if P_Fenetre.Terminer then
          Button.Set_Label(Label => "Rejouer");
       end if;
+      Barre_info(P_Fenetre);
    end Button_Commencer_Evenement;
 
 
@@ -182,6 +214,7 @@ package body Graphisme is
       end Loop;
    end Ajouter_Items_Option;
 
+
    procedure Initialize_Option
      (P_Fenetre : Pointeur_Fenetre;
       Box : Gtk.Box.Gtk_Hbox) is
@@ -194,10 +227,15 @@ package body Graphisme is
       Align : Gtk.Alignment.Gtk_Alignment;
       Align2 : Gtk.Alignment.Gtk_Alignment;
       Align3  :Gtk.Alignment.Gtk_Alignment;
+      Button_Quitter : Gtk.Button.Gtk_Button;
+      Pan : Gtk.Hbutton_Box.Gtk_Hbutton_Box;
    begin
+      Gtk.Button.Gtk_New(Button_Quitter,"Quitter");
+      Gtk.Hbutton_Box.Gtk_New(pan);
+      P_User_Callback.Connect(Button_Quitter ,"clicked" , Quitter_Evenement'access, P_Fenetre);
       Gtk.Alignment.Gtk_New(Align,0.5,0.5,0.0, 0.0);
       Gtk.Alignment.Gtk_New(Align2,0.5,0.5,0.0, 0.0);
-      Gtk.Alignment.Gtk_New(Align3,0.0,0.0,0.5, 0.0);
+      Gtk.Alignment.Gtk_New(Align3,1.0,1.0,1.0, 0.0);
       Gtk.Window.Gtk_New(P_Fenetre.Option.Window, Gtk.Enums.Window_Popup);
       Gtk.Box.Gtk_New_Vbox(Box_V,false,0);
       Gtk.Combo_Box_Text.Gtk_New(P_Fenetre.Option.Combo_Box_Premier_Joueur);
@@ -213,7 +251,10 @@ package body Graphisme is
       Box_H2.add(P_Fenetre.Option.Combo_Box_Second_Joueur);
       Align.Add(Box_H1);
       Align2.Add(Box_H2);
-      Align3.Add(Btn);
+      pan.add(Button_Quitter);
+
+      pan.add(Btn);
+      Align3.Add(pan);
       Box_V.Add(Align);
       Box_V.Add(Align2);
       Box_V.add(Align3);
@@ -234,11 +275,12 @@ package body Graphisme is
       Box.Set_Size_Request(50,100);
       Gtk.Window.Gtk_New(P_Fenetre.Scene.Window, Gtk.Enums.Window_Toplevel);
       Couleur(P_Fenetre.Scene.Window, "#fff");
+      P_Fenetre.Scene.Window.Set_Position(Gtk.Enums.Win_Pos_Center);
       P_Fenetre.Scene.Window.Set_Resizable(false);
-      Gtk.Label.Gtk_New(P_Fenetre.Scene.Menu.Label, "");
+      Gtk.Image.Gtk_New(P_Fenetre.Scene.Menu.Info, "../images/initial.png");
       Initialize_Scene(P_Fenetre,Box,Table,Box_V);
       Initialize_Option(P_Fenetre, Box);
-      Box_V.Add(P_Fenetre.Scene.Menu.Label);
+      Box_V.Add(P_Fenetre.Scene.Menu.Info);
       return P_Fenetre;
    end NouvelleFenetre;
 
