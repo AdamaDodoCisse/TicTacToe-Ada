@@ -60,8 +60,8 @@ package body Graphisme is
    is begin
       return estTourDe(P_Fenetre => P_Fenetre, valeur => "Humain");
    end TourHumain;
-   -- fonction qui teste si c'est le tour du CPU
-   function TourCPU(P_Fenetre : Pointeur_Fenetre) return boolean
+   -- fonction qui teste si c'est le tour du Ordinateur
+   function TourOrdinateur(P_Fenetre : Pointeur_Fenetre) return boolean
    is
    begin
       for i in Niveau_Jeu'Range loop
@@ -71,12 +71,12 @@ package body Graphisme is
       end loop;
       return false;
 
-   end TourCPU;
-   -- Procedure permettant de faire jouer le CPU
-   procedure Jouer_CPU( P_Fenetre : Pointeur_Fenetre) is
+   end TourOrdinateur;
+   -- Procedure permettant de faire jouer le Ordinateur
+   procedure Jouer_Ordinateur( P_Fenetre : Pointeur_Fenetre) is
    begin
 
-      if TourCPU(P_Fenetre) then
+      if TourOrdinateur(P_Fenetre) then
          if P_Fenetre.Option.Pion = Tictactoe.X then
             Intelligences(Niveau_Jeu'Value(P_Fenetre.Option.Combo_Box_Premier_Joueur.Get_Active_Text)).all(P_Fenetre.Scene.Plateau , Tictactoe.X);
          else
@@ -93,7 +93,7 @@ package body Graphisme is
       end if;
 
 
-   end Jouer_CPU;
+   end Jouer_Ordinateur;
    -- Procedure permettant la gestion de la barre d'info(Affichage du gagnant)
    procedure Barre_info(P_Fenetre : Pointeur_Fenetre) is
    begin
@@ -113,7 +113,7 @@ package body Graphisme is
 
    end Barre_info;
    -- Fonction test si deux ordinateurs jouent
-   function DeuxCpuJouent(P_Fenetre : Pointeur_Fenetre) return boolean is
+   function DeuxOrdinateurJouent(P_Fenetre : Pointeur_Fenetre) return boolean is
    begin
       declare
       begin
@@ -123,7 +123,7 @@ package body Graphisme is
              (P_Fenetre.Option.Combo_Box_Second_Joueur.Get_Active_Text) or true;
          exception when others => return false;
       end ;
-   end DeuxCpuJouent;
+   end DeuxOrdinateurJouent;
 
    ----------------------------------------------
    -- Gestion des evenements --
@@ -135,7 +135,7 @@ package body Graphisme is
    begin
       Barre_info(P_Fenetre);
       Get_Coordonnees(Button,P_Ligne,P_Colonne);
-      if DeuxCpuJouent(P_Fenetre) or not TourHumain(P_Fenetre) then
+      if DeuxOrdinateurJouent(P_Fenetre) or not TourHumain(P_Fenetre) then
          return;
       end if;
 
@@ -146,8 +146,8 @@ package body Graphisme is
             Barre_info(P_Fenetre);
       end if;
 
-       if TourCPU(P_Fenetre) then
-         Jouer_CPU( P_Fenetre);
+       if TourOrdinateur(P_Fenetre) then
+         Jouer_Ordinateur( P_Fenetre);
       end if;
       Barre_info(P_Fenetre);
 
@@ -166,8 +166,8 @@ package body Graphisme is
       P_Fenetre : Pointeur_Fenetre )
    is
    begin
-      if TourCPU(P_Fenetre) then
-         Jouer_CPU( P_Fenetre);
+      if TourOrdinateur(P_Fenetre) then
+         Jouer_Ordinateur( P_Fenetre);
       end if;
 
       if Button.Get_Label = "Rejouer" then
