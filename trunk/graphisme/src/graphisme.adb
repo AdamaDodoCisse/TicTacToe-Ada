@@ -110,6 +110,9 @@ package body Graphisme is
       else
          P_Fenetre.Scene.Menu.Info.Set("../images/initial.png");
       end if;
+      if P_Fenetre.Terminer then
+         P_Fenetre.Option.Nouvelle_Partie.Set_Label("Rejouer");
+      end if;
 
    end Barre_info;
    -- Fonction test si deux ordinateurs jouent
@@ -240,7 +243,7 @@ package body Graphisme is
       P_User_Callback.Connect(P_Fenetre.Scene.Grille_de_Boutons(P_Ligne,P_Colonne), "clicked", Case_Click_Evenement'ACCESS, P_Fenetre );
    end Ajout_Button_Scene;
    -- procedure permettant l'initialisation de la scene(9 boutons du plateau)
-   procedure Initialize_Scene
+   procedure Initialise_Scene
      (P_Fenetre : Pointeur_Fenetre;
       P_Gtk_Horizontal : in out Gtk.Box.Gtk_Hbox;
       P_Gtk_Table : in out Gtk.Table.Gtk_Table;
@@ -260,7 +263,7 @@ package body Graphisme is
       P_Gtk_Vertical.Add(Img_Header);
       P_Gtk_Vertical.Add(P_Gtk_Horizontal);
       P_Fenetre.Scene.Window.Add(P_Gtk_Vertical);
-   end Initialize_Scene;
+   end Initialise_Scene;
 
    -- procedure permettant l'ajout des itemes dans les deux menu deroulant du jeux
    procedure Ajouter_Items_Option(P_Fenentre : Pointeur_Fenetre) is
@@ -274,7 +277,7 @@ package body Graphisme is
    end Ajouter_Items_Option;
 
    -- initialisation des menus deroulants
-   procedure Initialize_Option
+   procedure Initialise_Option
      (P_Fenetre : Pointeur_Fenetre;
       Box : Gtk.Box.Gtk_Hbox) is
       Box_H1 :Gtk.Box.Gtk_Hbox;
@@ -282,7 +285,6 @@ package body Graphisme is
       Lbl : Gtk.Image.Gtk_Image;
       LbL2 : Gtk.Image.Gtk_Image;
       Box_V : Gtk.Box.Gtk_Vbox;
-      Btn : Gtk.Button.Gtk_Button;
       Align : Gtk.Alignment.Gtk_Alignment;
       Align2 : Gtk.Alignment.Gtk_Alignment;
       Align3  :Gtk.Alignment.Gtk_Alignment;
@@ -304,7 +306,7 @@ package body Graphisme is
       Gtk.Box.Gtk_New_Vbox(Box_V,false,0);
       Gtk.Combo_Box_Text.Gtk_New(P_Fenetre.Option.Combo_Box_Premier_Joueur);
       Gtk.Combo_Box_Text.Gtk_New(P_Fenetre.Option.Combo_Box_Second_Joueur);
-      Gtk.Button.Gtk_New(Btn, "Jouer");
+      Gtk.Button.Gtk_New(P_Fenetre.Option.Nouvelle_Partie, "Jouer");
       Gtk.Box.Gtk_New_Hbox(Box_H1, false,0);
       Gtk.Image.Gtk_New(LbL,"../images/icon-x.png");
       Box_H1.add(lbl);
@@ -315,7 +317,7 @@ package body Graphisme is
       Box_H2.add(P_Fenetre.Option.Combo_Box_Second_Joueur);
       Align.Add(Box_H1);
       Align2.Add(Box_H2);
-      pan.add(Btn);
+      pan.add(P_Fenetre.Option.Nouvelle_Partie);
       pan.add(Button_Quitter);
       Align4.Add(Bouton_aide);
       Align3.Add(pan);
@@ -325,7 +327,7 @@ package body Graphisme is
       Box_V.add(Align3);
       Ajouter_Items_Option(P_Fenetre);
       Box.add(Box_V);
-      P_User_Callback.Connect(btn, "clicked", Button_Commencer_Evenement'ACCESS, P_Fenetre );
+      P_User_Callback.Connect(P_Fenetre.Option.Nouvelle_Partie, "clicked", Button_Commencer_Evenement'ACCESS, P_Fenetre );
    end ;
    -- Creation de la fenetre d'aide
    procedure Aide(P_Fenetre : Pointeur_Fenetre) is
@@ -373,8 +375,8 @@ package body Graphisme is
       P_Fenetre.Scene.Window.Set_Position(Gtk.Enums.Win_Pos_Center);
       P_Fenetre.Scene.Window.Set_Resizable(false);
       Gtk.Image.Gtk_New(P_Fenetre.Scene.Menu.Info, "../images/initial.png");
-      Initialize_Scene(P_Fenetre,Box,Table,Box_V);
-      Initialize_Option(P_Fenetre, Box);
+      Initialise_Scene(P_Fenetre,Box,Table,Box_V);
+      Initialise_Option(P_Fenetre, Box);
       Box_V.Add(P_Fenetre.Scene.Menu.Info);
       Aide(P_Fenetre );
       return P_Fenetre;
