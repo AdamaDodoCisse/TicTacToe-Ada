@@ -46,16 +46,14 @@ private
    type Type_Menu is record
       Quitter : Gtk.Button.Gtk_Button;
       Recommencer : Gtk.Button.Gtk_Button;
-      Option : Gtk.Button.Gtk_Button;
       Info : Gtk.Image.Gtk_Image;
-      Commencer : boolean := false;
    end record;
    Type Pointeur_Type_Menu is access Type_Menu;
 
    type Type_Scene is record
       Window : Gtk.Window.Gtk_Window;
       Plateau : Tictactoe.Plateau.Pointeur_Plateau := Tictactoe.Plateau.NouveauPlateau;
-      Buttons : Type_Buttons;
+      Grille_de_Boutons : Type_Buttons;
       Menu : Pointeur_Type_Menu := new Type_Menu;
    end record;
    type Pointeur_Scene is access Type_Scene;

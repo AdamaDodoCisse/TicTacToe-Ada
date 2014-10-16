@@ -12,7 +12,7 @@ with Gtk.Hbutton_Box;
 with Gtk.Button_Box;
 package body Graphisme is
 
-   -- function  de conversion d'une cellule en image
+    -- function  de conversion d'une cellule en image
    function Cellule_En_Image
      (P_Fenetre : Pointeur_Fenetre;
       P_Ligne : Ligne;
@@ -31,7 +31,7 @@ package body Graphisme is
    begin
       for L in Tictactoe.Ligne'Range loop
          for C in  Tictactoe.Colonne'Range loop
-            P_Fenetre.Scene.Buttons(L,C).Set_Image(Cellule_En_Image(P_Fenetre,L,C));
+            P_Fenetre.Scene.Grille_de_Boutons(L,C).Set_Image(Cellule_En_Image(P_Fenetre,L,C));
          end loop;
       end loop;
    end;
@@ -219,12 +219,12 @@ package body Graphisme is
        P_Ligne : Tictactoe.ligne;
        P_Colonne : Tictactoe.Colonne) is
    begin
-      Gtk.Button.Gtk_New(Button => P_Fenetre.Scene.Buttons(P_Ligne,P_Colonne));
-      P_Fenetre.Scene.Buttons(P_Ligne,P_Colonne).Set_Relief(Relief_None);
-      P_Fenetre.Scene.Buttons(P_Ligne,P_Colonne).Set_Name(Name => Ligne'Image(P_Ligne) & Colonne'Image(P_Colonne));
-      P_Gtk_Table.Attach(P_Fenetre.Scene.Buttons(P_Ligne,P_Colonne),Ligne_En_Guint(p_Ligne) , Ligne_En_Guint(P_Ligne)  + 1 , Colonne_En_Guint(P_Colonne) , Colonne_En_Guint(P_Colonne) + 1);
-      P_Fenetre.Scene.Buttons(P_Ligne,P_Colonne).Set_Image(Image => Cellule_En_Image(P_Fenetre , P_Ligne, P_Colonne));
-      P_User_Callback.Connect(P_Fenetre.Scene.Buttons(P_Ligne,P_Colonne), "clicked", Case_Click_Evenement'ACCESS, P_Fenetre );
+      Gtk.Button.Gtk_New(Button => P_Fenetre.Scene.Grille_de_Boutons(P_Ligne,P_Colonne));
+      P_Fenetre.Scene.Grille_de_Boutons(P_Ligne,P_Colonne).Set_Relief(Relief_None);
+      P_Fenetre.Scene.Grille_de_Boutons(P_Ligne,P_Colonne).Set_Name(Name => Ligne'Image(P_Ligne) & Colonne'Image(P_Colonne));
+      P_Gtk_Table.Attach(P_Fenetre.Scene.Grille_de_Boutons(P_Ligne,P_Colonne),Ligne_En_Guint(p_Ligne) , Ligne_En_Guint(P_Ligne)  + 1 , Colonne_En_Guint(P_Colonne) , Colonne_En_Guint(P_Colonne) + 1);
+      P_Fenetre.Scene.Grille_de_Boutons(P_Ligne,P_Colonne).Set_Image(Image => Cellule_En_Image(P_Fenetre , P_Ligne, P_Colonne));
+      P_User_Callback.Connect(P_Fenetre.Scene.Grille_de_Boutons(P_Ligne,P_Colonne), "clicked", Case_Click_Evenement'ACCESS, P_Fenetre );
    end Ajout_Button_Scene;
    -- procedure permettant l'initialisation de la scene(9 boutons du plateau)
    procedure Initialize_Scene
