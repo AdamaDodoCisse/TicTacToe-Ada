@@ -12,6 +12,11 @@ with Gtk.Hbutton_Box;
 with Gtk.Button_Box;
 package body Graphisme is
 
+   -- function  de conversion d'une cellule en image
+   function Cellule_En_Image
+     (P_Fenetre : Pointeur_Fenetre;
+      P_Ligne : Ligne;
+      P_Colonne : Colonne)  return Gtk.Image.Gtk_Image;
    -------------------------------------------
    --- Procedure qui permet de colorer un Composant
    -------------------------------------------

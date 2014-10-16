@@ -1,4 +1,3 @@
-with Ada.Finalization; use Ada.Finalization;
 with Gtk.Window;
 with Gtk.Table;
 with Tictactoe; use Tictactoe;
@@ -19,19 +18,19 @@ package Graphisme is
    type Pointeur_Fenetre is access Fenetre;
    -- Les niveaux de jeux
    type Niveau_Jeu is (Facile, Moyen,Difficile);
-
+   -- Chemin du fichier contenant l'image x
    X_image : constant string := "../images/x.png";
+   -- Chemin du fichier contenant l'image o
    O_image : constant string := "../images/o.png";
+   -- Chemin du fichier contenant l'image d'une cellule vide
    V_image : constant string := "../images/vide.png";
    -- Les intilligences artificielles (Une liste d'indice "niveau de jeu" dont les valeurs sont des pointeurs sur des procedures)
    Intelligences : constant array(Niveau_Jeu'Range) of access procedure(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion) :=
      (Facile => Tictactoe.IA.Facile'Access , Moyen => Tictactoe.IA.Moyen'Access, Difficile => Tictactoe.IA.Difficile'Access);
-
-   -- Function permettant de renvoyer une nouvelle fenetre
+   -- Fonction permettant de renvoyer une nouvelle fenetre
    function NouvelleFenetre return Pointeur_Fenetre;
+   -- Affiche la fenetre
    procedure Afficher(P_Fenetre : Pointeur_Fenetre );
-   function Cellule_En_Image(P_Fenetre : Pointeur_Fenetre; P_Ligne : Ligne; P_Colonne : Colonne)
-                             return Gtk.Image.Gtk_Image;
 
 private
    type Type_Buttons is array(Tictactoe.Ligne'Range, Colonne'Range) of Gtk.Button.Gtk_Button;
@@ -60,7 +59,7 @@ private
       Menu : Pointeur_Type_Menu := new Type_Menu;
    end record;
    type Pointeur_Scene is access Type_Scene;
-   type Fenetre is new Controlled with record
+   type Fenetre is record
       Scene : Pointeur_Scene := new Type_Scene;
       Terminer : Boolean := false;
       Option : Pointeur_Type_Option := new Type_Option;
