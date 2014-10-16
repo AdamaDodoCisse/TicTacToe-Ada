@@ -18,7 +18,7 @@ package Tictactoe.Plateau is
    function Get_Cellule(P_Plateau : Pointeur_Plateau ; P_Ligne : Ligne ; P_Colonne : Colonne) return Pointeur_Cellule;
 
 private
-   --Tableau à deux dimentions composé de lignes et de colonnes
+   --Tableau à deux dimensions composés de lignes et de colonnes
    type Tableau2D is array( Ligne'Range, Colonne'Range) of Pointeur_Cellule;
 
    type Plateau is tagged record
