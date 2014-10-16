@@ -197,6 +197,19 @@ package body Graphisme is
    begin
       Afficher(P_Fenetre);
    end Bouton_aide_Evenement;
+    -- procedure permettant d'afficher l'aider
+   procedure Membre_Evenement(Button : access Gtk.Button.Gtk_Button_Record'Class; P_Fenetre : Pointeur_Fenetre)
+   is
+   begin
+      if Button.Get_Label = "Voir les membres" then
+         P_Fenetre.Image_aide.set("../images/membre.png");
+         Button.Set_Label(" Presentation");
+      else
+         P_Fenetre.Image_aide.set("../images/aide.png");
+         Button.Set_Label("Voir les membres");
+      end if;
+
+   end Membre_Evenement;
 
    -- fonction de conversion d'une ligne en Guint
    function Ligne_En_Guint(P_Ligne : Tictactoe.Ligne) return Guint is
@@ -316,12 +329,12 @@ package body Graphisme is
    end ;
    -- Creation de la fenetre d'aide
    procedure Aide(P_Fenetre : Pointeur_Fenetre) is
-      Image_aide : Gtk.Image.Gtk_Image;
       Composant_vertical : Gtk.Box.Gtk_Vbox;
       Composant_horizontal : Gtk.Box.Gtk_Hbox;
       Composant_Conteneur_Bouton : Gtk.Hbutton_Box.Gtk_Hbutton_Box;
       Bouton_Nouvelle_Partie : Gtk.Button.Gtk_Button;
       Bouton_Quitter : Gtk.Button.Gtk_Button;
+      Bouton_Membre : Gtk.Button.Gtk_Button;
    begin
       Gtk.Window.Gtk_New(P_Fenetre.Option.Window,Gtk.Enums.Window_Toplevel);
       P_Fenetre.Option.Window.Set_Title("Aide");
@@ -329,17 +342,20 @@ package body Graphisme is
       Gtk.Box.Gtk_New_Hbox(Composant_horizontal);
       Gtk.Button.Gtk_New(Bouton_Nouvelle_Partie,"Nouvelle Partie");
       Gtk.Button.Gtk_New(Bouton_Quitter,"Quitter le Jeu");
+      Gtk.Button.Gtk_New(Bouton_Membre,"Voir les membres");
        P_Fenetre.Option.Window.Set_Position(Gtk.Enums.Win_Pos_Center);
       Gtk.Hbutton_Box.Gtk_New(Composant_Conteneur_Bouton);
-      Gtk.Image.Gtk_New(Image_aide, "../images/aide.png");
-      Composant_vertical.Add(Image_aide);
+      Gtk.Image.Gtk_New(P_Fenetre.Image_aide, "../images/aide.png");
+      Composant_vertical.Add(P_Fenetre.Image_aide);
       Composant_Horizontal.add(Bouton_Nouvelle_Partie);
+      Composant_horizontal.Add(Bouton_Membre);
       Composant_Horizontal.add(Bouton_Quitter);
       Composant_vertical.add(Composant_Horizontal);
       P_Fenetre.Option.Window.Add(Composant_vertical);
       Couleur(Composant_Horizontal, "#000");
       P_User_Callback.Connect(Bouton_Nouvelle_Partie, "clicked", Nouvelle_Partie_Evenement'Access, P_Fenetre);
       P_User_Callback.Connect(Bouton_Quitter, "clicked", Quitter_Evenement'Access, P_Fenetre);
+      P_User_Callback.Connect(Bouton_membre, "clicked", Membre_Evenement'Access, P_Fenetre);
    end Aide;
    -- function permettant de renvoier une nouvelle fenetre
    function NouvelleFenetre return Pointeur_Fenetre is
@@ -352,6 +368,7 @@ package body Graphisme is
       Gtk.Box.Gtk_New_Hbox(Box, false,0);
       Box.Set_Size_Request(50,100);
       Gtk.Window.Gtk_New(P_Fenetre.Scene.Window, Gtk.Enums.Window_Toplevel);
+      P_Fenetre.Scene.Window.Set_Title("TICTACTOE");
       Couleur(P_Fenetre.Scene.Window, "#fff");
       P_Fenetre.Scene.Window.Set_Position(Gtk.Enums.Win_Pos_Center);
       P_Fenetre.Scene.Window.Set_Resizable(false);

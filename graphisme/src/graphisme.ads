@@ -60,6 +60,7 @@ private
    type Fenetre is record
       Scene : Pointeur_Scene := new Type_Scene;
       Terminer : Boolean := false;
+      Image_aide : Gtk.Image.Gtk_Image;
       Option : Pointeur_Type_Option := new Type_Option;
    end record;
    -- Package permettant la gestion des evenements
