@@ -13,21 +13,23 @@ with Tictactoe.IA;
 with Gtk.Combo_Box_Text;
 with Gtk.Label;
 package Graphisme is
+   -- Une fenetre de type privé
    type Fenetre is private;
+   -- Un pointeur sur une fenetre
    type Pointeur_Fenetre is access Fenetre;
+   -- Les niveaux de jeux
    type Niveau_Jeu is (Facile, Moyen,Difficile);
 
-   Dossier_Images : constant String := "../images" ;
    X_image : constant string := "../images/x.png";
    O_image : constant string := "../images/o.png";
    V_image : constant string := "../images/vide.png";
-
+   -- Les intilligences artificielles (Une liste d'indice "niveau de jeu" dont les valeurs sont des pointeurs sur des procedures)
    Intelligences : constant array(Niveau_Jeu'Range) of access procedure(P_Plateau : Tictactoe.Plateau.Pointeur_Plateau ; P_Pion : Pion) :=
      (Facile => Tictactoe.IA.Facile'Access , Moyen => Tictactoe.IA.Moyen'Access, Difficile => Tictactoe.IA.Difficile'Access);
 
-
+   -- Function permettant de renvoyer une nouvelle fenetre
    function NouvelleFenetre return Pointeur_Fenetre;
-   procedure show(P_Fenetre : Pointeur_Fenetre );
+   procedure Afficher(P_Fenetre : Pointeur_Fenetre );
    function Cellule_En_Image(P_Fenetre : Pointeur_Fenetre; P_Ligne : Ligne; P_Colonne : Colonne)
                              return Gtk.Image.Gtk_Image;
 
@@ -63,5 +65,6 @@ private
       Terminer : Boolean := false;
       Option : Pointeur_Type_Option := new Type_Option;
    end record;
+   -- Package permettant la gestion des evenements
    package P_User_Callback is new Gtk.Handlers.User_Callback(Widget_Type => Gtk.Button.Gtk_Button_Record, User_Type => Pointeur_Fenetre);
 end Graphisme;

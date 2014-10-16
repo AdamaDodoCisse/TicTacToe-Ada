@@ -6,6 +6,6 @@ is
    F : Graphisme.Pointeur_Fenetre;
 begin
    F := NouvelleFenetre;
-   Graphisme.show(P_Fenetre => F);
+   Graphisme.Afficher(P_Fenetre => F);
 
 end executable;
