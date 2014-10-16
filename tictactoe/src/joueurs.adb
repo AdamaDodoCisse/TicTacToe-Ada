@@ -34,9 +34,9 @@ Package body Joueurs is
    begin
       Put_Line("Selectionner le type du joueur");
       Put_Line("1=> Joueur");
-      Put_Line("2=> CPU Facile");
-      Put_Line("3=> CPU Moyen");
-      Put_Line("4=> CPU Difficile");
+      Put_Line("2=> Ordinateur Facile");
+      Put_Line("3=> Ordinateur Moyen");
+      Put_Line("4=> Ordinateur Difficile");
       J.Type_J:=Integer'Value(Get_Line);
    exception
       when Constraint_Error=>

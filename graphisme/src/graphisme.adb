@@ -60,7 +60,7 @@ package body Graphisme is
    is begin
       return estTourDe(P_Fenetre => P_Fenetre, valeur => "Humain");
    end TourHumain;
-   -- fonction qui teste si c'est le tour du Ordinateur
+   -- fonction qui teste si c'est le tour de l'Ordinateur
    function TourOrdinateur(P_Fenetre : Pointeur_Fenetre) return boolean
    is
    begin
@@ -72,7 +72,7 @@ package body Graphisme is
       return false;
 
    end TourOrdinateur;
-   -- Procedure permettant de faire jouer le Ordinateur
+   -- Procedure permettant de faire jouer l' Ordinateur
    procedure Jouer_Ordinateur( P_Fenetre : Pointeur_Fenetre) is
    begin
 
