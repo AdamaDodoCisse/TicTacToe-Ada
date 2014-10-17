@@ -45,7 +45,7 @@ Package body Partie is
       J2:Joueur;
    begin
       For i in 1..2 loop
-         Put_Line(ASCII.ESC & "[2J");
+
          Put_Line("Joueur numéro " & Integer'Image(i) & " Saisissez votre nom");
          --On demande à l'utilisateur de saisir son nom
          case i is
@@ -65,7 +65,7 @@ Package body Partie is
                J.Tab_j(i):=J2;
          end case;
       end loop;
-      Put_Line(ASCII.ESC & "[2J");
+
    end Inscrire_Joueurs;
 
    procedure Jouer is
@@ -81,7 +81,7 @@ Package body Partie is
          Affichage(J.P);-- Affichage du plateau
          Jouer_Tour(J.P,J.Tab_j((cpt mod 2)+1));--On fait jouer le joueur courant.
          --(cpt mod 2) + 1 permet de savoir à qui est-ce le tour de jouer.
-         Put(ASCII.ESC & "[2J");-- Efface le contenu de la console
+
          cpt:=cpt+1;--On incrémente le compteur de tour.
       end loop;
       Affichage(J.P);
