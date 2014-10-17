@@ -40,7 +40,6 @@ Package body Joueurs is
       J.Type_J:=Integer'Value(Get_Line);
    exception
       when Constraint_Error=>
-         Put_Line(ASCII.ESC & "[2J");
          Put_Line("Saisissez un type valide!!!");
          Set_Type(J);
    end Set_Type;
@@ -49,7 +48,7 @@ Package body Joueurs is
       X:ligne;
       Y:Colonne;
    begin
-      Put_Line(To_String(Get_Name(J)) & " C'est à vous de jouer ");
+      Put_Line("Au tour du joueur " & Integer'Image(J.Id) & " " & To_String(Get_Name(J)) & " de jouer ");
       Put_Line("Entrer la ligne");
       X:=Natural'Value(Get_Line);
       Put_Line("colonne");
